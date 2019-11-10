@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/api/v1/news")
 public class GreetingNewsWidgetApi {
 
-    final NewsService newsService;
+    private final NewsService newsService;
 
     @Autowired
     public GreetingNewsWidgetApi(NewsService newsService) {

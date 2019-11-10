@@ -1,0 +1,23 @@
+.card-header{
+    background-color: red;
+    display: flex;
+    justify-content: space-around;
+}
+.card{
+    margin-bottom: 15px;
+}
+.informed{
+    margin-left: 215px;
+}
+
+.card-body {
+    display: flex;
+    justify-content: space-around;
+}
+
+.text{
+    overflow-y: scroll;
+    width: 290px;
+    height: 100px;
+;
+}
