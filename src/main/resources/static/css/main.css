@@ -1,10 +1,11 @@
-.card-header{
-    background-color: red;
+.card-head{
+    padding-top: 5px;
+    background-color: burlywood;
     display: flex;
     justify-content: space-around;
 }
 .card{
-    margin-bottom: 15px;
+    margin-top: 10px;
 }
 .informed{
     margin-left: 215px;
@@ -19,5 +20,4 @@
     overflow-y: scroll;
     width: 290px;
     height: 100px;
-;
 }
