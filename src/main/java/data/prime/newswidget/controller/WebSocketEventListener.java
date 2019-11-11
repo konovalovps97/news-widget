@@ -6,6 +6,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class WebSocketEventListener {
@@ -18,7 +20,7 @@ public class WebSocketEventListener {
     }
 
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 5000)
     public void handleWebSocketDisconnectListener() {
 
         News news = new News();
@@ -28,6 +30,10 @@ public class WebSocketEventListener {
         news.setText("ASDASDASD");
         news.setTopic("TEST_TEST");
 
-        messagingTemplate.convertAndSend("/topic/public", news);
+        List<News> newsList = new ArrayList<>();
+        newsList.add(news);
+        newsList.add(news);
+
+        messagingTemplate.convertAndSend("/topic/public", newsList);
     }
 }
