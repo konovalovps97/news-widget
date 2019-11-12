@@ -21,3 +21,24 @@
     width: 290px;
     height: 100px;
 }
+
+.filter-panel {
+    background-color: #9fcdff;
+    height: 80px;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+#datePanel{
+    display: flex;
+    justify-content: space-around;
+    width: 400px;
+}
+
+#inputGroupSelect01, #inputGroupSelect02, #inputGroupSelect03{
+    border-radius: 5px;
+    font-size: 17px;
+    width: 150px;
+    height: 34px;
+}

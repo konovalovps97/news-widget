@@ -1,12 +1,12 @@
+'use strict';
+
 var socket = new SockJS('/ws');
-stompClient = Stomp.over(socket);
+var stompClient = Stomp.over(socket);
 
 stompClient.connect({}, onConnected, onError);
 
 
 function onError(error) {
-    connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
-    connectingElement.style.color = 'red';
 }
 
 var colors = [
@@ -32,8 +32,6 @@ function onMessageReceived(payload) {
     var message = JSON.parse(payload.body);
     console.log(message);
 
-    alert(message);
-    
     var newsBox = document.getElementById('main-box');
     message.forEach(function () {
         var div = document.createElement('div');
@@ -79,7 +77,7 @@ function onMessageReceived(payload) {
 function getAvatarColor(messageSender) {
     var hash = 0;
     for (var i = 0; i < getRandomInt(); i++) {
-        hash = 31 * hash + getRandomInt() ;
+        hash = 31 * hash + getRandomInt();
     }
 
     var index = Math.abs(hash % colors.length);
@@ -88,4 +86,25 @@ function getAvatarColor(messageSender) {
 
 function getRandomInt() {
     return Math.floor(Math.random() * Math.floor(40));
+}
+
+
+document.getElementById('dtOpen').onchange = function (ev) {
+    var date = new Date(document.getElementById('dtOpen').value).getTime();
+    localStorage.setItem('dtOpen', date.toString());
+};
+
+document.getElementById('dtClose').onchange = function (ev) {
+    var date = new Date(document.getElementById('dtClose').value).getTime();
+    localStorage.setItem('dtClose', date.toString());
+    alert(localStorage.getItem('dtOpen'));
+    if (localStorage.getItem('dtOpen') === null) {
+        document.getElementById('dtOpen').value = '01/01/2010';
+        var autoCreateDateOpen = new Date( document.getElementById('dtOpen').value).getTime();
+        localStorage.setItem('dtOpen', autoCreateDateOpen.toString())
+    }
+};
+
+function filter() {
+
 }
