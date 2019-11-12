@@ -19,7 +19,7 @@ var colors = [
 function onConnected() {
     // Subscribe to the Public Topic
     stompClient.subscribe('/topic/public', onMessageReceived);
-
+    localStorage.clear()
     // Tell your username to the server
     stompClient.send("/app/chat.addUser",
         {},
@@ -97,10 +97,10 @@ document.getElementById('dtOpen').onchange = function (ev) {
 document.getElementById('dtClose').onchange = function (ev) {
     var date = new Date(document.getElementById('dtClose').value).getTime();
     localStorage.setItem('dtClose', date.toString());
-    alert(localStorage.getItem('dtOpen'));
     if (localStorage.getItem('dtOpen') === null) {
         document.getElementById('dtOpen').value = '01/01/2010';
-        var autoCreateDateOpen = new Date( document.getElementById('dtOpen').value).getTime();
+        var autoCreateDateOpen = new Date(document.getElementById('dtOpen').value).getTime();
+
         localStorage.setItem('dtOpen', autoCreateDateOpen.toString())
     }
 };
