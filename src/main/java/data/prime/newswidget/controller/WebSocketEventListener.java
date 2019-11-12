@@ -20,15 +20,19 @@ public class WebSocketEventListener {
     }
 
 
-    @Scheduled(fixedRate = 120000)
+    @Scheduled(fixedRate = 15000)
     public void handleWebSocketDisconnectListener() {
 
         News news = new News();
         news.setId(1L);
-        news.setDate(new Date(123123213));
+        news.setDate(new Date(1573596823005L));
         news.setFamiliar(false);
         news.setText("ASDASDASD");
         news.setTopic("TEST_TEST");
+
+
+        news.setSkills("Скил1, Скил2");
+
 
         List<News> newsList = new ArrayList<>();
         newsList.add(news);

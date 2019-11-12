@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.1/darkly/bootstrap.min.css">
-    <link href="/static/css/buzina-pagination.min.css" rel="stylesheet" type="text/css">
     <link rel='stylesheet prefetch' href='https://www.rudebox.org.ua/demo/lessons/styles/style.css'>
     <link rel="stylesheet" href="/static/css/main.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -22,7 +21,7 @@
     <div class="filter-panel">
 
         <div id="datePanel">
-            <input  id="dtOpen" width="170"/>
+            <input id="dtOpen" width="170"/>
             <label for="dtOpen"></label>
 
             <label for="dtClose">по</label>
@@ -92,22 +91,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="/static/script/main.js"></script>
-<script src="/static/script/buzina-pagination.min.js"></script>
 <script>
     $('#dtOpen').datepicker({
         uiLibrary: 'bootstrap'
-    }).on('changeDate', function(e) {
-        alert(123);
     });
 
     $('#dtClose').datepicker({
         uiLibrary: 'bootstrap'
-    }).on('changeDate', function(e) {
-       alert(321)
     });
-
-
 </script>
-
-
 </html>

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.sql.Date;
+import java.util.List;
 
 /**
  * Сущность новости
@@ -48,4 +49,10 @@ public class News {
      */
     @Column(name = "TOPIC_NEWS")
     private String topic;
+
+    /**
+     * тема новости
+     */
+    @Column(name = "TOPIC_SKILL")
+    private String skills;
 }
