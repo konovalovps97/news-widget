@@ -20,7 +20,7 @@ public class WebSocketEventListener {
     }
 
 
-    @Scheduled(fixedRate = 15000)
+    @Scheduled(fixedRate = 55000)
     public void handleWebSocketDisconnectListener() {
 
         News news = new News();
@@ -35,6 +35,7 @@ public class WebSocketEventListener {
 
 
         List<News> newsList = new ArrayList<>();
+        newsList.add(news);
         newsList.add(news);
 
         messagingTemplate.convertAndSend("/topic/public", newsList);

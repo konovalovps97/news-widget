@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" >
 <head>
     <title>Новостной виджет</title>
     <meta charset="UTF-8">
@@ -15,6 +15,8 @@
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
+    <script src="/static/script/pagination.js"></script>
+
 </head>
 <body>
 <div class="container" id="main-box">
@@ -30,8 +32,8 @@
 
         <select class="custom-select" id="inputGroupSelect01" align="center">
             <option selected>Статус</option>
-            <option value="1">Прочитанные</option>
-            <option value="2">Не прочитанные</option>
+            <option value="Прочитанные">Прочитанные</option>
+            <option value="Не прочитанные">Не прочитанные</option>
         </select>
 
         <select class="custom-select" id="inputGroupSelect02" align="center">
@@ -49,45 +51,16 @@
         </select>
     </div>
 
+    <div id="news-box">
+    </div>
+    <ul id="pagin">
 
-    <!--
-        <div class="card">
-            <div class="card-head">
-                <div class="head">Заголовок новости</div>
-                <div class="informed">
-                    <label>
-                        <input type="checkbox">
-                    </label>
-                    Не Ознакомлен
-                </div>
-                <div class="">Скиллы</div>
-                <div class="">Тема</div>
-
-            </div>
-            <div class="card-body">
-                <div class="date">
-                    12-01-2020
-                </div>
-
-                <div class="text">
-                    Текст (от лат. textus — ткань; сплетение, сочетание) — зафиксированная на каком-либо материальном
-                    носителе человеческая мысль; в общем плане связная и полная последовательность символов.
-                </div>
-
-                <div class="link">
-                    <a href="https://google.com">Ссылка на статью</a>
-                </div>
-
-                <div class="skill">Тестовый скилл</div>
-
-                <div class="topic">Тестовая тема</div>
-            </div>
-        </div>
-    -->
+    </ul>
 </div>
-
 </body>
+<script>
 
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="/static/script/main.js"></script>

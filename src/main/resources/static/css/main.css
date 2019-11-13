@@ -46,3 +46,29 @@
 option{
     text-align: center;
 }
+
+.current {
+    color: green;
+}
+
+#pagin li {
+    display: inline-block;
+}
+
+.prev {
+    cursor: pointer;
+}
+
+.next {
+    cursor: pointer;
+}
+
+.last{
+    cursor:pointer;
+    margin-left:5px;
+}
+
+.first{
+    cursor:pointer;
+    margin-right:5px;
+}
