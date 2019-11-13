@@ -1,6 +1,9 @@
 package data.prime.newswidget.controller;
 
 import data.prime.newswidget.model.News;
+import data.prime.newswidget.repository.NewsRepo;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -8,36 +11,12 @@ import org.springframework.stereotype.Component;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class WebSocketEventListener {
 
-    private final SimpMessageSendingOperations messagingTemplate;
 
 
-    public WebSocketEventListener(SimpMessageSendingOperations messagingTemplate) {
-        this.messagingTemplate = messagingTemplate;
-    }
 
-
-    @Scheduled(fixedRate = 55000)
-    public void handleWebSocketDisconnectListener() {
-
-        News news = new News();
-        news.setId(1L);
-        news.setDate(new Date(1573596823005L));
-        news.setFamiliar(false);
-        news.setText("ASDASDASD");
-        news.setTopic("TEST_TEST");
-
-
-        news.setSkills("Скил1, Скил2");
-
-
-        List<News> newsList = new ArrayList<>();
-        newsList.add(news);
-        newsList.add(news);
-
-        messagingTemplate.convertAndSend("/topic/public", newsList);
-    }
 }

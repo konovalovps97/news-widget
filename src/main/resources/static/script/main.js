@@ -4,6 +4,8 @@ let socket = new SockJS('/ws');
 let stompClient = Stomp.over(socket);
 let newsBox = document.getElementById('news-box');
 let status = document.getElementById('inputGroupSelect01');
+let skill = document.getElementById('inputGroupSelect02');
+let topic = document.getElementById('inputGroupSelect03');
 stompClient.connect({}, onConnected, onError);
 
 let allNews = [];
@@ -32,12 +34,26 @@ function onConnected() {
 
 function onMessageReceived(payload) {
     let message = JSON.parse(payload.body);
-    console.log(message);
     message.forEach((element) => {
         element.color = getAvatarColor();
         element.id = allNews.length;
         allNews.push(element)
     });
+
+    let skills = allNews.map(value => {
+        return value.skills;
+    });
+
+    let topics = allNews.map(value => {
+        return value.topic;
+    });
+
+
+    let uniqueSkills = skills.filter(onlyUnique);
+    let uniqueTopics = topics.filter(onlyUnique);
+
+    addElementOnSkillsFilter(uniqueSkills);
+    addElementOnTopicsFilter(uniqueTopics);
     addElementOnPage(message);
 }
 
@@ -73,10 +89,15 @@ document.getElementById('dtClose').onchange = function (ev) {
 
 function filter() {
     for (let i = 0; i < localStorage.length; i++) {
-        alert(localStorage.key(i));
+        console.log(localStorage);
+
         switch (localStorage.key(i)) {
+
             case 'dtOpen':
             case 'dtClose': {
+                console.log(allNewsOnPage);
+                alert('DATA');
+
                 if (allNewsOnPage.length === 0) {
                     allNewsOnPage = allNews.filter(value => {
                             let filterDate = new Date(value.date).getTime();
@@ -91,6 +112,9 @@ function filter() {
                     );
                 }
                 i++;
+                localStorage.removeItem('dtOpen');
+                localStorage.removeItem('dtClose');
+
                 break;
             }
             case 'familiar' : {
@@ -107,10 +131,38 @@ function filter() {
                 }
                 break;
             }
-            case 'Skill' : {
+            case 'skills' : {
+                alert('SKILL');
+
+                if (allNewsOnPage.length === 0) {
+                    allNewsOnPage = allNews.filter(value => {
+                            return localStorage.getItem('skills') === value.skills;
+                        }
+                    );
+                } else {
+                    allNewsOnPage = allNewsOnPage.filter(value => {
+                            return localStorage.getItem('skills') === value.skills;
+                        }
+                    );
+                }
+               // localStorage.removeItem('skills');
                 break;
             }
-            case  'Topic' : {
+            case  'topic' : {
+                alert('TOPIC');
+
+                if (allNewsOnPage.length === 0) {
+                    allNewsOnPage = allNews.filter(value => {
+                            return localStorage.getItem('topic') === value.topic;
+                        }
+                    );
+                } else {
+                    allNewsOnPage = allNewsOnPage.filter(value => {
+                            return localStorage.getItem('topic') === value.topics;
+                        }
+                    );
+                }
+                //localStorage.removeItem('topic');
                 break;
             }
 
@@ -183,25 +235,88 @@ function addElementOnPage(message) {
 
 function changeValue(id, news) {
     console.log(news.date);
-    alert(123);
     document.getElementById(id).parentElement.parentElement.parentElement.parentElement.style.backgroundColor = '#CDC0BD';
     news.familiar = true;
     document.getElementById(id).parentElement.innerText = 'Ознкаомлен';
 }
 
+
 status.onchange = () => {
     if (status.value === 'Прочитанные') {
         localStorage.setItem('familiar', true.toString());
     } else {
-        localStorage.setItem('familiar', false.toString());
+        if (status.value === 'Статус') {
+            localStorage.removeItem('familiar');
+            allNewsOnPage = [];
+        } else {
+            localStorage.setItem('familiar', false.toString());
+        }
     }
     filter();
 };
 
+
+skill.onchange = () => {
+    if (skill.value === 'Скиллы') {
+        localStorage.removeItem('skills');
+    } else {
+        console.log(skill.value);
+        localStorage.setItem('skills', skill.value);
+    }
+    allNewsOnPage = [];
+    filter();
+};
+
+topic.onchange = () => {
+    if (topic.value === 'Темы') {
+        localStorage.removeItem('topic');
+    } else {
+        console.log(topic.value);
+        localStorage.setItem('topic', topic.value);
+    }
+    allNewsOnPage = [];
+    filter();
+};
+
+
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}
+
+function addElementOnSkillsFilter(skills) {
+    let defaultSkillsOption = document.getElementById('inputGroupSelect02');
+    let defaultValue = document.createElement('option');
+    defaultValue.setAttributeNode(document.createAttribute('selected'));
+    defaultValue.innerText = 'Скиллы';
+    defaultSkillsOption.append(defaultValue);
+    console.log(defaultSkillsOption);
+    skills.forEach(function (element) {
+        let option = document.createElement('option');
+        option.id = element;
+        option.innerText = element;
+        defaultSkillsOption.appendChild(option);
+    });
+}
+
+
+function addElementOnTopicsFilter(topics) {
+    let defaultSkillsOption = document.getElementById('inputGroupSelect03');
+    let defaultValue = document.createElement('option');
+    defaultValue.setAttributeNode(document.createAttribute('selected'));
+    defaultValue.innerText = 'Темы';
+    defaultSkillsOption.append(defaultValue);
+    console.log(defaultSkillsOption);
+    topics.forEach(function (element) {
+        let option = document.createElement('option');
+        option.innerText = element;
+        defaultSkillsOption.appendChild(option);
+    });
+}
+
 function pagination() {
     //Pagination
-    let pageSize = 4;
-    let incremSlide = 5;
+    let pageSize = 5;
+    let incremSlide = 100;
     let startPage = 0;
     let numberPage = 0;
 
@@ -238,13 +353,13 @@ function pagination() {
     let slide = function (sens) {
         $("#pagin li").hide();
 
-        for (t = startPage; t < incremSlide; t++) {
+        for (let t = startPage; t < incremSlide; t++) {
             $("#pagin li").eq(t + 1).show();
         }
-        if (startPage == 0) {
+        if (startPage === 0) {
             next.show();
             prev.hide();
-        } else if (numberPage == totalSlidepPage) {
+        } else if (numberPage === totalSlidepPage) {
             next.hide();
             prev.show();
         } else {
