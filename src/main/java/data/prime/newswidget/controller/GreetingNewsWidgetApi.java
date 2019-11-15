@@ -1,6 +1,6 @@
 package data.prime.newswidget.controller;
 
-import data.prime.newswidget.model.News;
+import data.prime.newswidget.model.ItemTypeTab;
 import data.prime.newswidget.repository.NewsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,25 +46,24 @@ public class GreetingNewsWidgetApi {
 
     @MessageMapping("/chat.addUser")
     @SendTo("/topic/public")
-    public List<News> newsList() {
-        List<News> newsList;
-        System.out.println("я контроллер!");
-        newsList = newsRepo.findAll();
-        List<Date> dates = newsList.stream().map(News::getDate).sorted().collect(Collectors.toList());
+    public List<ItemTypeTab> newsList() {
+        List<ItemTypeTab> itemTypeTabList;
+        itemTypeTabList = newsRepo.findAllByTypeLike("BREAKINGNEWS");
+        List<Date> dates = itemTypeTabList.stream().map(ItemTypeTab::getCreateDate).sorted().collect(Collectors.toList());
         actualDate = dates.get(dates.size() - 1);
-        return newsList;
+        return itemTypeTabList;
     }
 
     @Scheduled(fixedDelay = 5000, initialDelay = 1000)
     public void handleWebSocketDisconnectListener() {
-        List<News> newsList;
+        List<ItemTypeTab> itemTypeTabList;
         System.out.println("Я тут, но тут пусто");
         if (actualDate != null) {
-            newsList = newsRepo.findAllByDateAfter(actualDate);
-            if (newsList != null && !newsList.isEmpty()) {
-                List<Date> dates = newsList.stream().map(News::getDate).sorted().collect(Collectors.toList());
+            itemTypeTabList = newsRepo.findAllByCreateDateAfter(actualDate);
+            if (itemTypeTabList != null && !itemTypeTabList.isEmpty()) {
+                List<Date> dates = itemTypeTabList.stream().map(ItemTypeTab::getCreateDate).sorted().collect(Collectors.toList());
                 actualDate = dates.get(dates.size() - 1);
-                messagingTemplate.convertAndSend("/topic/public", newsList);
+                messagingTemplate.convertAndSend("/topic/public", itemTypeTabList);
             }
         }
     }

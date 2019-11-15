@@ -1,5 +1,8 @@
 'use strict';
 
+
+
+
 let socket = new SockJS('/ws');
 let stompClient = Stomp.over(socket);
 let newsBox = document.getElementById('news-box');
@@ -12,6 +15,7 @@ let allNews = [];
 let allNewsOnPage = [];
 
 function onError(error) {
+    alert('Вы не авторизованы')
 }
 
 let colors = [
@@ -22,7 +26,6 @@ let colors = [
 
 
 function onConnected() {
-    // Subscribe to the Public Topic
     stompClient.subscribe('/topic/public', onMessageReceived);
     localStorage.clear();
     // Tell your username to the server
@@ -30,6 +33,29 @@ function onConnected() {
         {},
         JSON.stringify({sender: 'PAVEL', type: 'JOIN'})
     );
+   /* var xhr = new XMLHttpRequest();
+    xhr.open("GET", 'http://diskmsint.data-integration.ru/kms/lh/login/post?username=diskmsint&password=t7KuM7x4qo&timezoneOffset=240&loginform=true', true);
+
+//Передает правильный заголовок в запросе
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.setRequestHeader("Referrer", "http://diskmsint.data-integration.ru/kms/lh/login");
+
+    xhr.onload = function() {
+        alert(123);//Вызывает функцию при смене состояния.
+        if(xhr.status === 302) {
+
+            stompClient.subscribe('/topic/public', onMessageReceived);
+            localStorage.clear();
+            // Tell your username to the server
+            stompClient.send("/app/chat.addUser",
+                {},
+                JSON.stringify({sender: 'PAVEL', type: 'JOIN'})
+            );
+        }
+    };
+
+    // Subscribe to the Public Topic
+*/
 }
 
 function onMessageReceived(payload) {
